@@ -13,9 +13,14 @@ Output: False
 """
 
 def has_duplicates(product_ids):
-    # Your implementation here
-    pass
+    if len(product_ids) == len(set(product_ids)):
+        print("False")
+    else:
+        print("True")
 
+#Comparing a list with an set is the right data structure, because an set deletes all the duplicates.
+#And if the length from a list is longer then the set means there is a duplicate that has been deleted in the set.
+#It will run pretty quickly as all it has to do is count the amount of values, will take longer the longer the list is.
 
 """
 Problem 2: Order Manager
@@ -29,18 +34,37 @@ task_queue.add_task("Email follow-up")
 task_queue.add_task("Code review")
 task_queue.remove_oldest_task() → "Email follow-up"
 """
+class Node:
+    def __init__(self, task):
+        self.task = task
+        self.next = None
 
 class TaskQueue:
     def __init__(self):
-        # Your initialization here
-        pass
+        self.front = None
+        self.rear = None
 
     def add_task(self, task):
-        pass
+        new_task = Node(task)
+        if not self.front:
+            self.front = new_task
+            self.rear = new_task
+        else:
+            self.rear.next = new_task
+            self.rear = new_task
 
     def remove_oldest_task(self):
-        pass
+        if not self.front:
+            return None
+        removed_node = self.front
+        self.front = self.front.next
+        if not self.front:
+            self.rear = None
+        return removed_node.task()
 
+#A queue is a perfect solution for this problem, because this is a first-in, first-out kind of problem.
+#You also need to be able to add from the front and delete from the back and with a stack that is not possible
+#The runtime wont change with the length of list, because the code will only be accessing the front and rear value
 
 """
 Problem 3: Unique Value Counter
